@@ -34,18 +34,19 @@ export const createProduct = async (req, res) => {
 }
 
 export const getProduct = async (req, res) => {
-    const { id } = req.params;
+  const { id } = req.params;
 
-    try {
-        const product = await sql`
-            SELECT * FROM products WHERE id=${id}
-        `
-        res.status(200).json({ success: true, data: product[0] });
-    } catch (error) {
-        console.log("error in getProduct function", error.message);
-        res.status(500).json({ success: false, message: error.message });
-    }
-}
+  try {
+    const product = await sql`
+     SELECT * FROM products WHERE id=${id}
+    `;
+
+    res.status(200).json({ success: true, data: product[0] });
+  } catch (error) {
+    console.log("Error in getProduct function", error);
+    res.status(500).json({ success: false, message: "Internal Server Error" });
+  }
+};
 
 export const updateProduct = async (req, res) => {
     const { id } = req.params;
