@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import axios from 'axios';
+import toast from 'react-hot-toast';
 
 const BASE_URL = 'http://localhost:3000';
 
@@ -64,4 +65,19 @@ export const useProductStore = create((set, get) => ({
             set({ loading: false });
         }
     },
+
+    deleteProduct: async (id) => {
+        set({ loading: true });
+        try {
+            await axios.delete(`${BASE_URL}/api/products/${id}`);
+            set(prev => ({ products: prev.products.filter(product => product.id !== id) }));
+            toast.success('Product deleted successfully.');
+        } catch (err) {
+            console.error("Either the product doesn't exist or it refused to die:", err);
+            set({ error: "Something went wrong while deleting the product." });
+            toast.error('An error occurred while deleting the product.');
+        } finally {
+            set({ loading: false });
+        }
+    }
 }))
