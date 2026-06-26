@@ -11,6 +11,36 @@ export const useProductStore = create((set, get) => ({
     error: null,
     rateLimitCount: 0,
 
+    // form state
+    formData: {
+        name: '',
+        price: '',
+        image: ''
+    },
+
+    setFormData: (formData) => set({ formData }),
+    resetForm: () => set({ formData: { name: '', price: '', image: '' } }),
+
+    addProduct: async (e) => {
+        e.preventDefault();
+        set({ loading: true });
+
+        try {
+            const { formData } = get();
+            await axios.post(`${BASE_URL}/api/products`, formData);
+            await get().fetchProducts();
+            get().resetForm();
+            toast.success('Product added successfully.');
+            document.getElementById('add-product-modal').close()
+        } catch (err) {
+            console.error("The product didn't consent to being added:", err);
+            set({ error: "Something went wrong while adding the product." });
+            toast.error('An error occurred while adding the product.');
+        } finally {
+            set({ loading: false })
+        }
+    },
+
     // fetch products from db
     fetchProducts: async () => {
         set({ loading: true });
