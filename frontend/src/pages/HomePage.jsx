@@ -18,7 +18,7 @@ function HomePage() {
           <PlusCircleIcon className="size-5 mr-2" />
           Add Product
         </button>
-        <button className="btn btn-ghost btn-circle" onClick={fetchProducts}>
+        <button className="btn btn-ghost btn-circle hover:bg-base-content/10" onClick={fetchProducts}>
           <RefreshCwIcon className="size-5" />
         </button>
       </div>

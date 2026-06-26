@@ -9,6 +9,7 @@ export const useProductStore = create((set, get) => ({
     products: [],
     loading: false,
     error: null,
+    currentProduct: null,
     rateLimitCount: 0,
 
     // form state
@@ -109,5 +110,34 @@ export const useProductStore = create((set, get) => ({
         } finally {
             set({ loading: false });
         }
-    }
+    },
+
+    fetchProduct: async (id) => {
+        set({ loading: true });
+        try {
+            const response = await axios.get(`${BASE_URL}/api/products/${id}`);
+            set({ currentProduct: response.data.data, formData: response.data.data, error: null, });
+        } catch (err) {
+            console.error("The product was too shy to want to be edited", err);
+            set({ error: "Something went wrong", currentProduct: null });
+            toast.error('Something went wrong when fetching the product');
+        } finally {
+            set({ loading: false });
+        }
+    },
+
+    updateProduct: async (id) => {
+        set({ loading: true })
+        try {
+            const { formData } = get();
+            const response = await axios.put(`${BASE_URL}/api/products/${id}`, formData)
+            set({currentProduct: response.data.data})
+            toast.success('Product updated successfully')
+        } catch (error) {
+            console.error("The product didn't agree with the changes you made and decided not to accept them.", error)
+            toast.error('Something went wrong when updating the product')
+        } finally {
+            set({ loading: false });
+        }
+    },
 }))
