@@ -4,7 +4,9 @@
   "description": "",
   "main": "backend/server.js",
   "scripts": {
-    "dev": "nodemon backend/server.js"
+    "dev": "nodemon backend/server.js",
+    "build": "npm install && npm install --prefix frontend && npm run build --prefix frontend",
+    "start": "node backend/server.js"
   },
   "keywords": [],
   "author": "",
@@ -21,6 +23,7 @@
     "morgan": "^1.10.1"
   },
   "devDependencies": {
-    "nodemon": "^3.1.11"
+    "nodemon": "^3.1.11",
+    "daisyui": "^5.5.19"
   }
 }
