@@ -1,13 +1,15 @@
 import React from 'react'
 import { Link, useResolvedPath } from "react-router-dom"
-import { Code, ShoppingCartIcon } from "lucide-react"
+import { Code, ShoppingBagIcon } from "lucide-react"
 import ThemeSelector from './ThemeSelector'
 import { useThemeStore } from '../store/useThemeStore'
+import { useProductStore } from '../store/useProductStore'
 
 function Navbar() {
-  const { pathname } = useResolvedPath()
-  const isHomePage = pathname === "/"
-  const { theme } = useThemeStore()
+  const { pathname } = useResolvedPath();
+  const isHomePage = pathname === "/";
+  const { theme } = useThemeStore();
+  const { products } = useProductStore();
 
   return (
     // icon & title (logo)
@@ -31,8 +33,8 @@ function Navbar() {
             {isHomePage && (
               <div className="indicator">
                 <div className="p-2 rounded-full hover:bg-base-200 transition-colors">
-                  <ShoppingCartIcon className="size-5" />
-                  <span className="badge badge-sm badge-primary indicator-item">3</span>
+                  <ShoppingBagIcon className="size-5" />
+                  <span className="badge badge-sm badge-primary indicator-item">{products.length}</span>
                 </div>
               </div>
             )}
