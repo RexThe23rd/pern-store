@@ -2,7 +2,7 @@ A product store built with the PERN stack, following a Codesistency tutorial.
 
 Note: I realize now its more of an inventory tracker, so i want to turn it into an actual marketplace store thing
 
-### To-do ###
+# To-do #
 
 ## Bug fixes ##
 
